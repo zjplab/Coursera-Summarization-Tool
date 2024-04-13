@@ -21,8 +21,17 @@ def natural_sort_key(s):
     """A key to sort strings with numeric parts in natural order."""
     return [int(text) if text.isdigit() else text.lower() for text in re.split(r'(\d+)', s)]
 
+def parse_course_input(course_or_url):
+    """Extracts the course name from a URL or direct input."""
+    match = re.search(r'/learn/([^/]+)', course_or_url)
+    if match:
+        return match.group(1)
+    else:
+        # Remove leading/trailing slashes and normalize
+        return course_or_url.strip('/').replace('/', '-')
+
 def create_transcript(course):
-    # Constructing paths and titles from course parameter
+    # Determine the root directory and file names from the course parameter
     root_dir = f"./{course}/"
     output_file = f"./{course}.txt"
     main_heading = course.replace('-', ' ').title()
@@ -67,9 +76,10 @@ def create_transcript(course):
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:
-        print("Usage: python script.py <course_name>")
+        print("Usage: python script.py <course_name_or_url>")
         sys.exit(1)
     
-    course = sys.argv[1].strip().strip('/')
-    message = create_transcript(course)
+    course_input = sys.argv[1]
+    course_name = parse_course_input(course_input)
+    message = create_transcript(course_name)
     print(message)
