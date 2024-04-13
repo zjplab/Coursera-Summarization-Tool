@@ -28,4 +28,4 @@ python -m pip install --user .
 cd ..
 
 # Run the cs-dlp command with the specified options
-/root/.local/bin/cs-dlp "$course" -f "pdf srt" --subtitle-language en --ignore-formats "mp4 webm" --cauth "$cauth"
+/root/.local/bin/cs-dlp "$course" -f "srt" --subtitle-language en --ignore-formats "mp4 webm" --cauth "$cauth"
